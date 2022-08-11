@@ -20,7 +20,7 @@ const Main = () => {
   const [notesPerPage, setNotesPerPage] = useState(6);
   const [show, setShow] = useState(false);
   const [showNoteId, setShowNoteId] = useState(null);
-  const [pinned, setPinned] = useState(null);
+  // const [pinned, setPinned] = useState(null);
 
   const indexOfLastNote = notesPerPage * page;
   const indexOfFirstNote = indexOfLastNote - notesPerPage;
@@ -38,7 +38,7 @@ const Main = () => {
       setNotes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getNotes();
-  }, [notes]);
+  }, []);
 
   const handleShow = (id) => {
     setShowNoteId(id);
@@ -49,15 +49,31 @@ const Main = () => {
 
   const handlePin = async (e, id) => {
     e.stopPropagation();
+    const filteredNotes = notes.filter((x) => x.id !== id);
     const note = notes.filter((x) => x.id === id)[0];
+
     note.pinned = !note.pinned;
+    setNotes([
+      ...filteredNotes,
+      {
+        title: note.title,
+        tag: note.tag,
+        body: note.body,
+        pinned: note.pinned,
+        id,
+      },
+    ]);
+
     const noteDoc = doc(db, "notes", id);
     await updateDoc(noteDoc, { ...note, pinned: note.pinned });
   };
 
   const deleteNote = async (e, id) => {
     e.stopPropagation();
-    const noteDoc = doc(db, "notes", id);
+
+    setNotes(notes.filter((x) => x.id !== id));
+
+    const noteDoc = doc(db, "notes", `${id}`);
     await deleteDoc(noteDoc);
   };
 
@@ -65,7 +81,7 @@ const Main = () => {
     <>
       <div className="main">
         <h3>Add a note: </h3>
-        <AddNote />
+        <AddNote notes={notes} setNotes={setNotes} />
         <section className="notes">
           <h6>Pinned: </h6>
           {pinnedNotes &&
@@ -102,8 +118,9 @@ const Main = () => {
         <Modal.Body>
           <AddNote
             notes={notes}
+            setNotes={setNotes}
             showNoteId={showNoteId}
-            pinned={pinned}
+            // pinned={pinned}
             close={handleClose}
             edit={true}
             del={(e) => deleteNote(e, showNoteId)}

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase";
 
-const AddNote = ({ notes, showNoteId, close, edit, del }) => {
+const AddNote = ({ notes, setNotes, showNoteId, close, edit, del }) => {
   const [title, setTitle] = useState("");
   const [tag, setTag] = useState("");
   const [body, setBody] = useState("");
@@ -18,10 +18,20 @@ const AddNote = ({ notes, showNoteId, close, edit, del }) => {
     e.preventDefault();
     if (title !== "") {
       if (showNoteId) {
-        const noteDoc = doc(db, "notes", showNoteId);
+        const filteredNotes = notes.filter((x) => x.id !== showNoteId);
+        const note = notes.filter((x) => x.id === showNoteId)[0];
+        setNotes([
+          ...filteredNotes,
+          { title, tag, body, pinned: note.pinned, id: showNoteId },
+        ]);
+        const noteDoc = doc(db, "notes", `${showNoteId}`);
         await updateDoc(noteDoc, { title, tag, body, id: showNoteId });
         close();
       } else {
+        setNotes([
+          ...notes,
+          { title, tag, body, pinned: false, id: Math.random() },
+        ]);
         await addDoc(notesRef, { title, tag, body, pinned: false });
       }
     } else {
