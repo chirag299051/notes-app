@@ -19,14 +19,24 @@ code {
   min-height: 100vh;
   height: fit-content;
 }
-.main > h3 {
-  width: 10%;
+
+.add {
+  width: 600px;
   margin: auto;
+  padding: 20px 0px;
+  border-radius: 10px;
+  background-color: rgb(41, 41, 73);
+}
+
+.main > .add > h3 {
+  width: 10vw;
+  margin: auto;
+  color: aliceblue;
   margin-bottom: 20px;
 }
 
 .add-note {
-  width: 30%;
+  width: 30vw;
   margin: auto;
 }
 

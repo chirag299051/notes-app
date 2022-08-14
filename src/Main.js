@@ -80,8 +80,11 @@ const Main = () => {
   return (
     <>
       <div className="main">
-        <h3>Add a note: </h3>
-        <AddNote notes={notes} setNotes={setNotes} />
+        <div className="add">
+          <h3>Add a note: </h3>
+          <AddNote notes={notes} setNotes={setNotes} />
+        </div>
+
         <section className="notes">
           <h6>Pinned: </h6>
           {pinnedNotes &&
