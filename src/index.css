@@ -122,3 +122,43 @@ code {
 .footer a:hover span#c {
   color: rgb(155, 2, 2);
 }
+
+@media screen and (max-width: 680px) {
+  .add {
+    width: 90vw;
+    margin-bottom: 20px;
+  }
+
+  .main > .add > h3 {
+    width: 35vw;
+  }
+
+  .add-note {
+    width: 90%;
+  }
+
+  .add-note.edit {
+    margin-top: 80px;
+    width: 90%;
+  }
+
+  .btn-container {
+    margin: auto;
+    width: 50%;
+  }
+
+  .notes {
+    width: 100vw;
+  }
+
+  .notes h6 {
+    margin: 50px 20px;
+  }
+
+  .note {
+    width: 90vw;
+    margin: 10px auto;
+    display: block;
+    overflow: hidden;
+  }
+}

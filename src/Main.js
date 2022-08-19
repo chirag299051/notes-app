@@ -20,7 +20,6 @@ const Main = () => {
   const [notesPerPage, setNotesPerPage] = useState(6);
   const [show, setShow] = useState(false);
   const [showNoteId, setShowNoteId] = useState(null);
-  // const [pinned, setPinned] = useState(null);
 
   const indexOfLastNote = notesPerPage * page;
   const indexOfFirstNote = indexOfLastNote - notesPerPage;
@@ -114,7 +113,7 @@ const Main = () => {
         </section>
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Edit Note</Modal.Title>
         </Modal.Header>
